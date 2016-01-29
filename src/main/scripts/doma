@@ -1,0 +1,4 @@
+#!/usr/bin/env python
+
+from doma import main
+main.main()
