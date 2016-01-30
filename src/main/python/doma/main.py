@@ -1,7 +1,11 @@
 """doma
 
 Usage:
-  doma link <config>
+  doma [options] link <config>
+
+Options:
+  -d --debug  Activate debug
+
 """
 
 import os
@@ -11,6 +15,7 @@ import yaml
 
 LINK = 'link'
 SUBCOMMANDS = [LINK]
+DEBUG = False
 
 
 class CMDLineExit(Exception):
@@ -19,6 +24,11 @@ class CMDLineExit(Exception):
 
 class ConfigError(Exception):
     pass
+
+
+def debug(message):
+    if DEBUG:
+        print message
 
 
 def get_subcommand(arguments):
@@ -31,10 +41,14 @@ def get_subcommand(arguments):
 
 def main():
     arguments = docopt(__doc__)
+    global DEBUG
+    if arguments['--debug']:
+        DEBUG = True
     config_path = arguments['<config>']
     dir_name = os.path.dirname(arguments['<config>'])
     home_dir = os.environ['HOME']
     loaded_config = yaml.load(open(config_path).read())
+    debug(loaded_config)
     subcommand = get_subcommand(arguments)
     if subcommand == LINK:
         for program, program_config in loaded_config.items():
@@ -47,4 +61,15 @@ def main():
                     dest = os.path.join(home_dir, file_['dest'])
                 except KeyError:
                     dest = os.path.join(home_dir, file_['src'])
-                os.symlink(src, dest)
+                debug("Will try to symlink '{0}' to '{1}'...".format(src, dest))
+                try:
+                    os.symlink(src, dest)
+
+                except OSError as ose:
+                    if ose.errno == 17:
+                        debug("symlink exists")
+                    else:
+                        raise
+                else:
+                    debug("successful")
+
