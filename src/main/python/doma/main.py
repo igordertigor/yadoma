@@ -17,6 +17,10 @@ class CMDLineExit(Exception):
     pass
 
 
+class ConfigError(Exception):
+    pass
+
+
 def get_subcommand(arguments):
     for subcommand in SUBCOMMANDS:
         if arguments[subcommand]:
@@ -35,6 +39,12 @@ def main():
     if subcommand == LINK:
         for program, program_config in loaded_config.items():
             for file_ in program_config['files']:
-                src = os.path.abspath(os.path.join(dir_name, file_['src']))
-                dest = os.path.join(home_dir, file_['dest'])
+                try:
+                    src = os.path.abspath(os.path.join(dir_name, file_['src']))
+                except KeyError:
+                    raise ConfigError("Missing 'src' entry")
+                try:
+                    dest = os.path.join(home_dir, file_['dest'])
+                except KeyError:
+                    dest = os.path.join(home_dir, file_['src'])
                 os.symlink(src, dest)
