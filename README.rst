@@ -4,6 +4,59 @@ dotfile manager
 
 This is my personal take on a dotfile manager.
 
+Principles
+----------
+
+* Pile of symlinks approach
+* Declarative configuration
+* Composable
+* Versioning not baked in
+
+Example
+-------
+
+Given the config in home, e.g. ``doma.yaml``:
+
+.. code:: yaml
+
+   - ~/config/zsh-config
+   - ~/config/vim-config
+   - ~/config/ssh-config
+
+Given the following directory structure:
+
+.. code:: console
+
+   $ ls ~/config/zsh-config
+   .zshrc
+   $ ls ~/config/vim-config
+   .vimrc
+   .vim
+   $ ls ~/config/ssh-config
+   .ssh/
+   $ ls ~/config/ssh-config/.ssh
+   .ssh/config
+
+
+Given a files of the form:
+
+.. code:: yaml
+
+    file:
+      name: my_zsh_config
+
+Let's imagine something different:
+
+.. code:: yaml
+
+   ~/public_config/
+     - zsh
+       - .zshrc
+       - .zshrc.local
+       - .zsh/
+     - ssh
+       - .ssh/config
+
 License
 -------
 
