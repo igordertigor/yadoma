@@ -9,23 +9,23 @@
 
 # create an example program that we can execute and check it works
 
-  $ touch example
-  $ chmod +x example
-  $ echo "#!/bin/sh\n" > example
-  $ echo "echo 'hello example'" > example
-  $ example
-  hello example
+  $ touch example-prog
+  $ chmod +x example-prog
+  $ echo "#!/bin/sh\n" > example-prog
+  $ echo "echo 'hello example-prog'" > example-prog
+  $ example-prog
+  hello example-prog
 
 # create the fake config directory with configs
 
   $ mkdir config
   $ touch config/.rc_with_src
-  $ echo "example_confgrc" > config/.rc_with_src
+  $ echo "example_prog_confgrc" > config/.rc_with_src
   $ touch config/.rc_with_out_dest
-  $ echo "example_confgrc.local" > config/.rc_with_out_dest
+  $ echo "example_prog_confgrc.local" > config/.rc_with_out_dest
   $ touch config/yadoma.cfg
   $ cat <<EOF >> config/yadoma.cfg
-  > example:
+  > example-prog:
   >   files:
   >     -
   >       src: .rc_with_src
@@ -34,7 +34,7 @@
   >       src: .rc_with_out_dest
   > EOF
   $ cat  config/yadoma.cfg
-  example:
+  example-prog:
     files:
       -
         src: .rc_with_src
@@ -45,7 +45,7 @@
 
   $ ls -A1
   config
-  example
+  example-prog
   test-home
   $ ls -A1 config
   .rc_with_out_dest
@@ -64,7 +64,7 @@
 
   $ ls -A1
   config
-  example
+  example-prog
   test-home
   $ ls -A1 config
   .rc_with_out_dest

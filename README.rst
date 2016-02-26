@@ -15,47 +15,32 @@ Principles
 Example
 -------
 
-Given the config in home, e.g. ``yadoma.yaml``:
+Given the config ``yadoma.yaml`` in the directory ``config/public``::
 
-.. code:: yaml
+    example-prog:
+      files:
+        -
+          src: .rc_with_src
+          dest: .rc_with_src_dest
+        -
+          src: .rc_with_out_dest
 
-   - ~/config/zsh-config
-   - ~/config/vim-config
-   - ~/config/ssh-config
+And, given the following files of the directory ::
 
-Given the following directory structure:
+    .rc_with_src
+    .rc_with_out_dest
 
-.. code:: console
+Doing::
 
-   $ ls ~/config/zsh-config
-   .zshrc
-   $ ls ~/config/vim-config
-   .vimrc
-   .vim
-   $ ls ~/config/ssh-config
-   .ssh/
-   $ ls ~/config/ssh-config/.ssh
-   .ssh/config
+    $ yadoma config/public
+
+Will create the following two symlinks in the users ``$HOME`` (or an
+alternative otherwise specified) for the program ``example-prog``::
 
 
-Given a files of the form:
+    .rc_with_src_dest
+    .rc_with_out_dest
 
-.. code:: yaml
-
-    file:
-      name: my_zsh_config
-
-Let's imagine something different:
-
-.. code:: yaml
-
-   ~/public_config/
-     - zsh
-       - .zshrc
-       - .zshrc.local
-       - .zsh/
-     - ssh
-       - .ssh/config
 
 License
 -------
