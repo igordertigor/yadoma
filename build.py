@@ -9,7 +9,7 @@ use_plugin("python.distutils")
 use_plugin("python.cram")
 
 
-name = "doma"
+name = "yadoma"
 default_task = "publish"
 
 

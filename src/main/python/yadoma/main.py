@@ -1,7 +1,7 @@
-"""doma
+"""yadoma
 
 Usage:
-  doma [options] link <config>
+  yadoma [options] link <config>
 
 Options:
   -d --debug  Activate debug

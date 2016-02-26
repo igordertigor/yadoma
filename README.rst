@@ -1,6 +1,6 @@
-===============
-dotfile manager
-===============
+===================================
+yadoma: yet another dotfile manager
+===================================
 
 This is my personal take on a dotfile manager.
 
@@ -15,7 +15,7 @@ Principles
 Example
 -------
 
-Given the config in home, e.g. ``doma.yaml``:
+Given the config in home, e.g. ``yadoma.yaml``:
 
 .. code:: yaml
 
