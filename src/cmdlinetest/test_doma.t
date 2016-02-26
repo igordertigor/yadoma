@@ -1,6 +1,6 @@
 # setup the fake home
 
-  $ export HOME=$PWD/home
+  $ export HOME=$PWD/test-home
   $ mkdir $HOME
 
 # put the current working dir on the path
@@ -46,7 +46,7 @@
   $ ls -A1
   config
   example
-  home
+  test-home
   $ ls -A1 config
   doma.cfg
   .rc_with_out_dest
@@ -54,7 +54,7 @@
 
 # check that home is empty
 
-  $ ls -A1 home
+  $ ls -A1 test-home
 
 # run doma
 
@@ -65,7 +65,7 @@
   $ ls -A1
   config
   example
-  home
+  test-home
   $ ls -A1 config
   doma.cfg
   .rc_with_out_dest
@@ -73,13 +73,13 @@
 
 # check the newly created values incl. symlinks
 
-  $ ls -A1 home
+  $ ls -A1 test-home
   .rc_with_out_dest
   .rc_with_src_dest
-  $ realpath home/.rc_with_src_dest
+  $ realpath test-home/.rc_with_src_dest
   /tmp/cramtests-.*/test_doma.t/config/.rc_with_src (re)
 
 # check that 'src' is used in case of missing dest
 
-  $ realpath home/.rc_with_out_dest
+  $ realpath test-home/.rc_with_out_dest
   /tmp/cramtests-.*/test_doma.t/config/.rc_with_out_dest (re)
