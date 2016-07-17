@@ -6,9 +6,10 @@ use_plugin("python.core")
 use_plugin("python.unittest")
 use_plugin("python.install_dependencies")
 use_plugin("python.flake8")
-use_plugin("python.coverage")
+#use_plugin("python.coverage")
 use_plugin("python.distutils")
 use_plugin("python.cram")
+use_plugin("filter_resources")
 
 
 name = "yadoma"
@@ -19,6 +20,7 @@ version = '{0}.{1}'.format(VCSRevision().count,
 
 @init
 def set_properties(project):
-    for dependency in ('docopt', ):
-        project.depends_on('docopt')
-        project.depends_on('pyyaml')
+    project.depends_on('docopt')
+    project.depends_on('pyyaml')
+    project.get_property('filter_resources_glob').extend(
+        ['**/yadoma/__init__.py'])
