@@ -29,7 +29,7 @@ class ConfigError(Exception):
     pass
 
 
-def debug(message):
+def verbose(message):
     if VERBOSE:
         print(message)
 
@@ -67,7 +67,7 @@ def link(file_, base_dir, target_dir):
     if DRY_RUN:
         info(message)
     else:
-        debug(message)
+        verbose(message)
         try:
             os.symlink(src, dest)
         except OSError as ose:
@@ -76,7 +76,7 @@ def link(file_, base_dir, target_dir):
             else:
                 raise
         else:
-            debug("successful")
+            verbose("successful")
 
 
 def main():
@@ -85,6 +85,8 @@ def main():
     global DRY_RUN
     if arguments['--verbose']:
         VERBOSE = True
+        verbose('arguments:')
+        verbose(arguments)
     if arguments['--dry-run']:
         DRY_RUN = True
     target_dir = os.environ['HOME']
@@ -93,8 +95,8 @@ def main():
     for config_path in config_paths:
         base_dir = os.path.dirname(config_path)
         loaded_config = yaml.load(open(config_path).read())
-        debug('loaded config:')
-        debug(loaded_config)
+        verbose('loaded config:')
+        verbose(loaded_config)
         if subcommand == LINK:
             for program, program_config in loaded_config.items():
                 for file_ in program_config['files']:
