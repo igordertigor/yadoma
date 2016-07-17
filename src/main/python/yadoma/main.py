@@ -28,7 +28,7 @@ class ConfigError(Exception):
 
 def debug(message):
     if DEBUG:
-        print message
+        print(message)
 
 
 def get_subcommand(arguments):
