@@ -53,7 +53,6 @@ def link(file_, base_dir, target_dir):
     debug("Will try to symlink '{0}' to '{1}'...".format(src, dest))
     try:
         os.symlink(src, dest)
-
     except OSError as ose:
         if ose.errno == 17:
             debug("symlink exists")
