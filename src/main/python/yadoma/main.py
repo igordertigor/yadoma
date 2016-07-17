@@ -1,7 +1,8 @@
 """yadoma
 
 Usage:
-  yadoma [options] link <config>
+  yadoma [options] link <config>...
+  yadoma [options] <config>...
 
 Options:
   -v --verbose  Verbose mode
@@ -46,7 +47,7 @@ def get_subcommand(arguments):
         if arguments[subcommand]:
             return subcommand
     else:
-        raise CMDLineExit
+        return LINK
 
 
 def link(file_, base_dir, target_dir):
@@ -86,13 +87,15 @@ def main():
         VERBOSE = True
     if arguments['--dry-run']:
         DRY_RUN = True
-    config_path = arguments['<config>']
-    base_dir = os.path.dirname(arguments['<config>'])
     target_dir = os.environ['HOME']
-    loaded_config = yaml.load(open(config_path).read())
-    debug(loaded_config)
+    config_paths = arguments['<config>']
     subcommand = get_subcommand(arguments)
-    if subcommand == LINK:
-        for program, program_config in loaded_config.items():
-            for file_ in program_config['files']:
-                link(file_, base_dir, target_dir)
+    for config_path in config_paths:
+        base_dir = os.path.dirname(config_path)
+        loaded_config = yaml.load(open(config_path).read())
+        debug('loaded config:')
+        debug(loaded_config)
+        if subcommand == LINK:
+            for program, program_config in loaded_config.items():
+                for file_ in program_config['files']:
+                    link(file_, base_dir, target_dir)
