@@ -5,6 +5,8 @@ Usage:
   yadoma [options] <config>...
 
 Options:
+  -h --help     Help screen
+  --version     Version
   -v --verbose  Verbose mode
   -d --dry-run  Dry run
 
@@ -14,6 +16,8 @@ import os
 
 from docopt import docopt
 import yaml
+
+from . import __version__ as version
 
 LINK = 'link'
 SUBCOMMANDS = [LINK]
@@ -80,7 +84,7 @@ def link(file_, base_dir, target_dir):
 
 
 def main():
-    arguments = docopt(__doc__)
+    arguments = docopt(__doc__, version=version)
     global VERBOSE
     global DRY_RUN
     if arguments['--verbose']:
