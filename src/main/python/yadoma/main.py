@@ -38,7 +38,7 @@ def info(message):
 
 
 def warn(message):
-    print(message)
+    print('warn: ' + message)
 
 
 def get_subcommand(arguments):
