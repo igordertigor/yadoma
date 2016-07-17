@@ -19,4 +19,6 @@ version = '{0}.{1}'.format(VCSRevision().count,
 
 @init
 def set_properties(project):
-    pass
+    for dependency in ('docopt', ):
+        project.depends_on('docopt')
+        project.depends_on('pyyaml')
