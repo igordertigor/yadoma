@@ -53,12 +53,12 @@ def link(file_, base_dir, target_dir):
     try:
         src = os.path.abspath(os.path.join(base_dir, file_['src']))
     except KeyError:
-        raise ConfigError("Missing 'src' entry")
+        raise ConfigError("missing 'src' entry")
     try:
         dest = os.path.join(target_dir, file_['dest'])
     except KeyError:
         dest = os.path.join(target_dir, file_['src'])
-    message = "Will try to symlink '{0}' to '{1}'...".format(src, dest)
+    message = "will try to symlink '{0}' to '{1}'...".format(src, dest)
     if DRY_RUN:
         info(message)
     else:
