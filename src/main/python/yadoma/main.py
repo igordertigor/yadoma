@@ -37,6 +37,10 @@ def info(message):
     print(message)
 
 
+def warn(message):
+    print(message)
+
+
 def get_subcommand(arguments):
     for subcommand in SUBCOMMANDS:
         if arguments[subcommand]:
@@ -63,7 +67,7 @@ def link(file_, base_dir, target_dir):
             os.symlink(src, dest)
         except OSError as ose:
             if ose.errno == 17:
-                debug("symlink exists")
+                warn("symlink exists in target:{0}".format(dest))
             else:
                 raise
         else:
