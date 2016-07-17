@@ -50,14 +50,18 @@ def get_subcommand(arguments):
 
 
 def link(file_, base_dir, target_dir):
-    try:
-        src = os.path.abspath(os.path.join(base_dir, file_['src']))
-    except KeyError:
-        raise ConfigError("missing 'src' entry")
-    try:
-        dest = os.path.join(target_dir, file_['dest'])
-    except KeyError:
-        dest = os.path.join(target_dir, file_['src'])
+    if isinstance(file_, str):
+        src = os.path.abspath(os.path.join(base_dir, file_))
+        dest = os.path.join(target_dir, file_)
+    else:
+        try:
+            src = os.path.abspath(os.path.join(base_dir, file_['src']))
+        except KeyError:
+            raise ConfigError("missing 'src' entry")
+        try:
+            dest = os.path.join(target_dir, file_['dest'])
+        except KeyError:
+            dest = os.path.join(target_dir, file_['src'])
     message = "will try to symlink '{0}' to '{1}'...".format(src, dest)
     if DRY_RUN:
         info(message)
