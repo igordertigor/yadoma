@@ -33,6 +33,10 @@ def debug(message):
         print(message)
 
 
+def info(message):
+    print(message)
+
+
 def get_subcommand(arguments):
     for subcommand in SUBCOMMANDS:
         if arguments[subcommand]:
@@ -50,23 +54,30 @@ def link(file_, base_dir, target_dir):
         dest = os.path.join(target_dir, file_['dest'])
     except KeyError:
         dest = os.path.join(target_dir, file_['src'])
-    debug("Will try to symlink '{0}' to '{1}'...".format(src, dest))
-    try:
-        os.symlink(src, dest)
-    except OSError as ose:
-        if ose.errno == 17:
-            debug("symlink exists")
-        else:
-            raise
+    message = "Will try to symlink '{0}' to '{1}'...".format(src, dest)
+    if DRY_RUN:
+        info(message)
     else:
-        debug("successful")
+        debug(message)
+        try:
+            os.symlink(src, dest)
+        except OSError as ose:
+            if ose.errno == 17:
+                debug("symlink exists")
+            else:
+                raise
+        else:
+            debug("successful")
 
 
 def main():
     arguments = docopt(__doc__)
     global DEBUG
+    global DRY_RUN
     if arguments['--debug']:
         DEBUG = True
+    if arguments['--dry-run']:
+        DRY_RUN = True
     config_path = arguments['<config>']
     base_dir = os.path.dirname(arguments['<config>'])
     target_dir = os.environ['HOME']
