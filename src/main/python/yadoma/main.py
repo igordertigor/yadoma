@@ -5,6 +5,7 @@ Usage:
 
 Options:
   -d --debug  Activate debug
+  --dry-run   Dry run
 
 """
 
@@ -16,6 +17,7 @@ import yaml
 LINK = 'link'
 SUBCOMMANDS = [LINK]
 DEBUG = False
+DRY_RUN = False
 
 
 class CMDLineExit(Exception):
