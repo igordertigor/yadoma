@@ -4,8 +4,8 @@ Usage:
   yadoma [options] link <config>
 
 Options:
-  -d --debug  Activate debug
-  --dry-run   Dry run
+  -v --verbose  Verbose mode
+  -d --dry-run  Dry run
 
 """
 
@@ -16,7 +16,7 @@ import yaml
 
 LINK = 'link'
 SUBCOMMANDS = [LINK]
-DEBUG = False
+VERBOSE = False
 DRY_RUN = False
 
 
@@ -29,7 +29,7 @@ class ConfigError(Exception):
 
 
 def debug(message):
-    if DEBUG:
+    if VERBOSE:
         print(message)
 
 
@@ -72,10 +72,10 @@ def link(file_, base_dir, target_dir):
 
 def main():
     arguments = docopt(__doc__)
-    global DEBUG
+    global VERBOSE
     global DRY_RUN
-    if arguments['--debug']:
-        DEBUG = True
+    if arguments['--verbose']:
+        VERBOSE = True
     if arguments['--dry-run']:
         DRY_RUN = True
     config_path = arguments['<config>']
