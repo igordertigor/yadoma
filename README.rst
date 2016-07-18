@@ -22,7 +22,7 @@ Principles
 Example
 -------
 
-Given the config ``yadoma.yaml`` in the directory ``config/public``::
+Given the config ``config.yadoma`` in the directory ``config/public``::
 
     example-prog:
       files:
