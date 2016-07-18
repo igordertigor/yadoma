@@ -4,6 +4,13 @@ yadoma: yet another dotfile manager
 
 This is my personal take on a dotfile manager.
 
+Prior Art
+---------
+
+- `vcsh <https://github.com/RichiH/vcsh>`_
+- `dewi <https://github.com/ft/dewi>`_
+- `dotfilemanager <https://pypi.python.org/pypi/dotfilemanager/>`_
+
 Principles
 ----------
 
