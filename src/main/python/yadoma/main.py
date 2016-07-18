@@ -5,10 +5,11 @@ Usage:
   yadoma [options] <config>...
 
 Options:
-  -h --help     Help screen
-  --version     Version
-  -v --verbose  Verbose mode
-  -d --dry-run  Dry run
+  -h --help         Help screen
+  --version         Version
+  -v --verbose      Verbose mode
+  -d --dry-run      Dry run
+  --force-symlink   Force overwrite symlinks
 
 """
 
@@ -23,6 +24,7 @@ LINK = 'link'
 SUBCOMMANDS = [LINK]
 VERBOSE = False
 DRY_RUN = False
+FORCE_SYMLINK = False
 
 
 class CMDLineExit(Exception):
@@ -70,29 +72,33 @@ def link(file_, base_dir, target_dir):
     message = "will try to symlink '{0}' to '{1}'...".format(src, dest)
     if DRY_RUN:
         info(message)
+        info('...but will not because we are in a dry-run.')
     else:
         verbose(message)
-        try:
+        if (not os.path.exists(dest) or
+                os.path.exists(dest) and FORCE_SYMLINK):
+            if FORCE_SYMLINK:
+                verbose('(will remove existing symlink as requested)')
+                os.remove(dest)
             os.symlink(src, dest)
-        except OSError as ose:
-            if ose.errno == 17:
-                warn("symlink exists in target:{0}".format(dest))
-            else:
-                raise
+            verbose("...successful.")
         else:
-            verbose("successful")
+            warn("...failed: symlink exists in target:{0}".format(dest))
 
 
 def main():
     arguments = docopt(__doc__, version=version)
     global VERBOSE
     global DRY_RUN
+    global FORCE_SYMLINK
     if arguments['--verbose']:
         VERBOSE = True
         verbose('arguments:')
         verbose(arguments)
     if arguments['--dry-run']:
         DRY_RUN = True
+    if arguments['--force-symlink']:
+        FORCE_SYMLINK = True
     target_dir = os.environ['HOME']
     config_paths = arguments['<config>']
     subcommand = get_subcommand(arguments)
