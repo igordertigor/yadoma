@@ -2,7 +2,7 @@
 yadoma: yet another dotfile manager
 ===================================
 
-This is my personal take on a dotfile manager.
+This is my personal take on a dotfile-manager.
 
 Prior Art
 ---------
@@ -22,7 +22,7 @@ Principles
 Example
 -------
 
-Given the config ``config.yadoma`` in the directory ``config/public``::
+Given the yaml config ``config.yadoma`` in the directory ``config/public``::
 
     example-prog:
       files:
