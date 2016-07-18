@@ -41,8 +41,8 @@ Doing::
 
     $ yadoma config/public
 
-Will create the following two symlinks in the users ``$HOME`` (or an
-alternative otherwise specified) for the program ``example-prog``::
+Will create the following two symlinks in the users ``$HOME`` for the program
+``example-prog``::
 
 
     .rc_with_src_dest
