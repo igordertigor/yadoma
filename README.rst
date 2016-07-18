@@ -32,7 +32,7 @@ Given the yaml config ``config.yadoma`` in the directory ``config/public``::
         -
           src: .rc_with_out_dest
 
-And, given the following files of the directory ::
+And, given the following files of the directory::
 
     .rc_with_src
     .rc_with_out_dest
