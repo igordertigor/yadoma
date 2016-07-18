@@ -51,6 +51,11 @@ Will create the following symlinks in the users ``$HOME`` for the program
     .rc_with_src_dest
     .rc_with_out_dest
 
+TODO and Ideas
+--------------
+
+Many.
+
 
 License
 -------
