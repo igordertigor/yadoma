@@ -31,7 +31,7 @@ Given the yaml config ``config.yadoma`` in the directory ``config/public``::
           dest: .rc_with_src_dest
         -
           src: .rc_with_out_dest
-        - .painrc
+        - .plainrc
 
 And, given the following files of the directory::
 
