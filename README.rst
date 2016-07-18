@@ -31,9 +31,11 @@ Given the yaml config ``config.yadoma`` in the directory ``config/public``::
           dest: .rc_with_src_dest
         -
           src: .rc_with_out_dest
+        - .painrc
 
 And, given the following files of the directory::
 
+    .plainrc
     .rc_with_src
     .rc_with_out_dest
 
@@ -41,10 +43,11 @@ Doing::
 
     $ yadoma config/public
 
-Will create the following two symlinks in the users ``$HOME`` for the program
+Will create the following symlinks in the users ``$HOME`` for the program
 ``example-prog``::
 
 
+    .plainrc
     .rc_with_src_dest
     .rc_with_out_dest
 
