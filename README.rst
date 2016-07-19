@@ -16,9 +16,12 @@ Principles
 Prior Art (or why I decided to roll my own)
 -------------------------------------------
 
-:`vcsh <https://github.com/RichiH/vcsh>`_: written in shell (yuck) and has git baked in
-:`dewi <https://github.com/ft/dewi>`_: written in perl and didn't grok how it worked
-:`dotfilemanager <https://pypi.python.org/pypi/dotfilemanager/>`_: has weird conventions and strange config
+`vcsh <https://github.com/RichiH/vcsh>`_
+    written in shell (yuck) and has git baked in
+`dewi <https://github.com/ft/dewi>`_
+    written in perl (yuck) and didn't grok how it worked
+`dotfilemanager <https://pypi.python.org/pypi/dotfilemanager/>`_
+    has weird conventions and strange config
 
 Example
 -------
