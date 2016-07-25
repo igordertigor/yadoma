@@ -1,0 +1,31 @@
+language: python
+cache: pip
+
+python:
+  - "3.5"
+
+before_install:
+  - git fetch --unshallow || true
+
+install:
+  - pip install -U pip
+  - pip install --pre pybuilder
+  - pyb -X install_dependencies
+
+script:
+  - pyb -X
+
+before_deploy:
+  - pyb -X package
+
+deploy:
+  provider: pypi
+  user: esc
+  distributions: sdist
+  skip_cleanup: true
+  password:
+  secure: "mw2uIYLLjrCXkd49M3dF7aEhGtdEi4LLTF9AEIE6ifIcDsOlgRbuo8rhhTXAA+Nrlf114yih2HSJeNIUD5y6uyCAb+lxiYIVnFF7xuyE2J6AtYhzN3HLSXMFwA+lwXHL0aKQINP2O4c1FaKjJEzSWIegWvvKzb9YX/2cpspZzsBC0hWTix7XbghgKkIuxnwJ8rWb/DXQvLo+Ptgk+HreTLfWlPJ56Pa1ImjWAlCVC67qam/ZNFHxTXepOIvGLH4M4CGNlS9tzhma7b8fBXHt7U4NlrYivX4li8mqp1/4ZmvsMNDruRUmOhKKlVsk+u3Al5MihH8k9AEDmoVb38I4bW4Ku3vDrkVV3MiyDAuk25Am14EB0fRBNG4PQ+fh1K+RpkFUXqfoe8n0gM/WYmFBIKMy4ZreDL1lE+U2trWQTL10U4NXXq0hnzYqzYn40FixHrMSj4eYOxdByzV+RyjGXpWa5oGrKGFkvfpiAIV8w2r816sf38B/rKkCL9ghZKVwjobatm72XRs1OlJfAP548qYd2a0zTrwYUxp4OBYsCBT/x7YUgp+UAPRnVB2I1rXMBRo/qiOyHASkHjKUn8TGQ5gc52wSLtLij7JNtYeev28su18f6ENi8DYz7RU4nQmg+ZT/OQTGAmFz9aZMjXlmDgGvA4DkLVsuFkT7Pn9vuFE="
+  on:
+    repo: esc/yadoma
+    python: '3.5'
+    branch: master
