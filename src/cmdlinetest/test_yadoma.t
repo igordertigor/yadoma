@@ -84,12 +84,12 @@
   .plain_rc
   .rc_with_out_dest
   .rc_with_src_dest
-  $ realpath test-home/.rc_with_src_dest
+  $ readlink -f test-home/.rc_with_src_dest
   /tmp/cramtests-.*/test_yadoma.t/config/.rc_with_src (re)
-  $ realpath test-home/.plain_rc
+  $ readlink -f test-home/.plain_rc
   /tmp/cramtests-.*/test_yadoma.t/config/.plain_rc (re)
 
 # check that 'src' is used in case of missing dest
 
-  $ realpath test-home/.rc_with_out_dest
+  $ readlink -f test-home/.rc_with_out_dest
   /tmp/cramtests-.*/test_yadoma.t/config/.rc_with_out_dest (re)
