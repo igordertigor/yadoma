@@ -29,3 +29,5 @@ deploy:
     repo: esc/yadoma
     python: '3.5'
     branch: master
+after_deploy:
+  - cat $HOME/.pypirc
