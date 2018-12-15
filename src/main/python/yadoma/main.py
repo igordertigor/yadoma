@@ -1,29 +1,25 @@
 """yadoma
 
 Usage:
-  yadoma [options] link <config>...
   yadoma [options] <config>...
 
 Options:
-  -h --help         Help screen
-  --version         Version
-  -v --verbose      Verbose mode
-  -d --dry-run      Dry run
-  --force-symlink   Force overwrite symlinks
+  -h --help            Help screen
+  --version            Version
+  -v --verbose         Verbose mode
+  -f --force-symlink   Force overwrite symlinks
 
 """
 
 import os
+from difflib import unified_diff
 
 from docopt import docopt
 import yaml
 
 from . import __version__ as version
 
-LINK = 'link'
-SUBCOMMANDS = [LINK]
 VERBOSE = False
-DRY_RUN = False
 FORCE_SYMLINK = False
 
 
@@ -48,15 +44,8 @@ def warn(message):
     print('warn: ' + message)
 
 
-def get_subcommand(arguments):
-    for subcommand in SUBCOMMANDS:
-        if arguments[subcommand]:
-            return subcommand
-    else:
-        return LINK
-
-
 def link(file_, base_dir, target_dir):
+    # decode json
     if isinstance(file_, str):
         src = os.path.abspath(os.path.join(base_dir, file_))
         dest = os.path.join(target_dir, file_)
@@ -69,22 +58,50 @@ def link(file_, base_dir, target_dir):
             dest = os.path.join(target_dir, file_['dest'])
         except KeyError:
             dest = os.path.join(target_dir, file_['src'])
-    message = "will try to symlink '{0}' to '{1}'...".format(src, dest)
-    if DRY_RUN:
-        info(message)
-        info('...but will not because we are in a dry-run.')
-    else:
-        verbose(message)
-        if (not os.path.exists(dest) or
-                os.path.exists(dest) and FORCE_SYMLINK):
-            if FORCE_SYMLINK:
-                verbose('(will remove existing symlink as requested)')
-                os.remove(dest)
-            os.symlink(src, dest)
-            verbose("...successful.")
-        else:
-            warn("...failed: symlink exists in target:{0}".format(dest))
+    message = "symlink '{0}' --> '{1}': {2}"
+    dest_exists = os.path.lexists(dest)
 
+    def print_status(status):
+        """ Closure to print status. """
+        info(message.format(src, dest, status))
+
+    if not dest_exists:
+        print_status("does not exist, will link")
+        os.symlink(src, dest)
+
+    elif dest_exists and os.path.islink(dest):
+        if os.path.realpath(dest) == src:
+            print_status("is valid link, doing nothing")
+        elif os.path.realpath(dest) != src and not FORCE_SYMLINK:
+            print_status("is invalid link, ignoring, use --force-symlink to force")
+        elif os.path.realpath(dest) != src and FORCE_SYMLINK:
+            print_status("is invalud link, but will link anyway due to --force-symlink")
+            os.remove(dest)
+            os.symlink(src, dest)
+
+    elif dest_exists and os.path.isfile(dest):
+        if not FORCE_SYMLINK:
+            print_status("is an existing file, use --force-symlink to force")
+        elif FORCE_SYMLINK:
+            print_status("is an existing file, but will link anyway due to --force-symlink ")
+            os.remove(dest)
+            os.symlink(src, dest)
+
+    elif dest_exists and os.path.isdir(dest):
+        if not FORCE_SYMLINK:
+            print_status("is an existing directory, use --force-symlink to force")
+        elif FORCE_SYMLINK:
+            print_status("is an existing directory, but will link anyway due to --force-symlink ")
+            os.remove(dest)
+            os.symlink(src, dest)
+
+    elif dest_exists and os.path.ismount(dest):
+        if not FORCE_SYMLINK:
+            print_status("is an existing mount point, use --force-symlink to force")
+        elif FORCE_SYMLINK:
+            print_status("is an existing mount point, but will link anyway due to --force-symlink ")
+            os.remove(dest)
+            os.symlink(src, dest)
 
 def main():
     arguments = docopt(__doc__, version=version)
@@ -95,19 +112,15 @@ def main():
         VERBOSE = True
         verbose('arguments:')
         verbose(arguments)
-    if arguments['--dry-run']:
-        DRY_RUN = True
     if arguments['--force-symlink']:
         FORCE_SYMLINK = True
     target_dir = os.environ['HOME']
     config_paths = arguments['<config>']
-    subcommand = get_subcommand(arguments)
     for config_path in config_paths:
         base_dir = os.path.dirname(config_path)
         loaded_config = yaml.load(open(config_path).read())
         verbose('loaded config:')
         verbose(loaded_config)
-        if subcommand == LINK:
-            for program, program_config in loaded_config.items():
-                for file_ in program_config['files']:
-                    link(file_, base_dir, target_dir)
+        for program, program_config in loaded_config.items():
+            for file_ in program_config['files']:
+                link(file_, base_dir, target_dir)
