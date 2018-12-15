@@ -58,7 +58,7 @@ def link(file_, base_dir, target_dir):
             dest = os.path.join(target_dir, file_['dest'])
         except KeyError:
             dest = os.path.join(target_dir, file_['src'])
-    message = "symlink '{0}' --> '{1}': {2}"
+    message = "'{0}' --> '{1}': {2}"
     dest_exists = os.path.lexists(dest)
 
     def print_status(status):
