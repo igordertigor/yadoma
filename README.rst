@@ -23,6 +23,9 @@ Prior Art (or why I decided to roll my own)
 `dotfilemanager <https://pypi.python.org/pypi/dotfilemanager/>`_
     has weird conventions and strange config
 
+Edit: in 2018, I discovered that there are many more dotfile-managers out
+there: https://dotfiles.github.io/
+
 Example
 -------
 
@@ -65,7 +68,7 @@ License
 -------
 
 
-Copyright 2016 Valentin Haenel <valentin@haenel.co>
+Copyright 2016-2018 Valentin Haenel <valentin@haenel.co>
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
 this file except in compliance with the License. You may obtain a copy of the
