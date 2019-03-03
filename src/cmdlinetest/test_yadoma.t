@@ -64,7 +64,10 @@
 
 # run yadoma
 
-  $ yadoma link config/yadoma.cfg
+  $ yadoma config/yadoma.cfg
+  '/tmp/cramtests-.*/test_yadoma.t/config/.rc_with_src' --> '/tmp/cramtests-.*/test_yadoma.t/test-home/.rc_with_src_dest': does not exist, will link (re)
+  '/tmp/cramtests-.*/test_yadoma.t/config/.rc_with_out_dest' --> '/tmp/cramtests-.+/test_yadoma.t/test-home/.rc_with_out_dest': does not exist, will link (re)
+  '/tmp/cramtests-.*/test_yadoma.t/config/.plain_rc' --> '/tmp/cramtests-.*/test_yadoma.t/test-home/.plain_rc': does not exist, will link (re)
 
 # check that the config dir remains unchanged
 
