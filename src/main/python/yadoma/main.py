@@ -118,7 +118,8 @@ def main():
     config_paths = arguments['<config>']
     for config_path in config_paths:
         base_dir = os.path.dirname(config_path)
-        loaded_config = yaml.load(open(config_path).read())
+        loaded_config = yaml.load(open(config_path).read(),
+                                  Loader=yaml.SafeLoader)
         verbose('loaded config:')
         verbose(loaded_config)
         for program, program_config in loaded_config.items():
