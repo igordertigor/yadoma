@@ -75,7 +75,7 @@ def link(file_, base_dir, target_dir):
         elif os.path.realpath(dest) != src and not FORCE_SYMLINK:
             print_status("is invalid link, ignoring, use --force-symlink to force")
         elif os.path.realpath(dest) != src and FORCE_SYMLINK:
-            print_status("is invalud link, but will link anyway due to --force-symlink")
+            print_status("is invalid link, but will link anyway due to --force-symlink")
             os.remove(dest)
             os.symlink(src, dest)
 
