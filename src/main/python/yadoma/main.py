@@ -48,16 +48,16 @@ def link(file_, base_dir, target_dir):
     # decode json
     if isinstance(file_, str):
         src = os.path.abspath(os.path.join(base_dir, file_))
-        dest = os.path.join(target_dir, file_)
+        dest = os.path.expanduser(os.path.join(target_dir, file_))
     else:
         try:
             src = os.path.abspath(os.path.join(base_dir, file_['src']))
         except KeyError:
             raise ConfigError("missing 'src' entry")
         try:
-            dest = os.path.join(target_dir, file_['dest'])
+            dest = os.path.expanduser(os.path.join(target_dir, file_['dest']))
         except KeyError:
-            dest = os.path.join(target_dir, file_['src'])
+            dest = os.path.expanduser(os.path.join(target_dir, file_['src']))
     message = "'{0}' --> '{1}': {2}"
     dest_exists = os.path.lexists(dest)
 
