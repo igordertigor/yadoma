@@ -8,11 +8,9 @@ Options:
   --version            Version
   -v --verbose         Verbose mode
   -f --force-symlink   Force overwrite symlinks
-
 """
 
 import os
-from difflib import unified_diff
 
 from docopt import docopt
 import yaml
@@ -62,46 +60,53 @@ def link(file_, base_dir, target_dir):
     dest_exists = os.path.lexists(dest)
 
     def print_status(status):
-        """ Closure to print status. """
+        """Closure to print status."""
         info(message.format(src, dest, status))
 
     if not dest_exists:
-        print_status("does not exist, will link")
+        print_status('does not exist, will link')
         os.symlink(src, dest)
 
     elif dest_exists and os.path.islink(dest):
         if os.path.realpath(dest) == src:
-            print_status("is valid link, doing nothing")
+            print_status('is valid link, doing nothing')
         elif os.path.realpath(dest) != src and not FORCE_SYMLINK:
-            print_status("is invalid link, ignoring, use --force-symlink to force")
+            print_status('is invalid link, ignoring, use --force-symlink to force')
         elif os.path.realpath(dest) != src and FORCE_SYMLINK:
-            print_status("is invalid link, but will link anyway due to --force-symlink")
+            print_status('is invalid link, but will link anyway due to --force-symlink')
             os.remove(dest)
             os.symlink(src, dest)
 
     elif dest_exists and os.path.isfile(dest):
         if not FORCE_SYMLINK:
-            print_status("is an existing file, use --force-symlink to force")
+            print_status('is an existing file, use --force-symlink to force')
         elif FORCE_SYMLINK:
-            print_status("is an existing file, but will link anyway due to --force-symlink ")
+            print_status(
+                'is an existing file, but will link anyway due to --force-symlink '
+            )
             os.remove(dest)
             os.symlink(src, dest)
 
     elif dest_exists and os.path.isdir(dest):
         if not FORCE_SYMLINK:
-            print_status("is an existing directory, use --force-symlink to force")
+            print_status('is an existing directory, use --force-symlink to force')
         elif FORCE_SYMLINK:
-            print_status("is an existing directory, but will link anyway due to --force-symlink ")
+            print_status(
+                'is an existing directory, but will link anyway due to --force-symlink '
+            )
             os.remove(dest)
             os.symlink(src, dest)
 
     elif dest_exists and os.path.ismount(dest):
         if not FORCE_SYMLINK:
-            print_status("is an existing mount point, use --force-symlink to force")
+            print_status('is an existing mount point, use --force-symlink to force')
         elif FORCE_SYMLINK:
-            print_status("is an existing mount point, but will link anyway due to --force-symlink ")
+            print_status(
+                'is an existing mount point, but will link anyway due to --force-symlink '
+            )
             os.remove(dest)
             os.symlink(src, dest)
+
 
 def main():
     arguments = docopt(__doc__, version=version)
@@ -118,8 +123,7 @@ def main():
     config_paths = arguments['<config>']
     for config_path in config_paths:
         base_dir = os.path.dirname(config_path)
-        loaded_config = yaml.load(open(config_path).read(),
-                                  Loader=yaml.SafeLoader)
+        loaded_config = yaml.load(open(config_path).read(), Loader=yaml.SafeLoader)
         verbose('loaded config:')
         verbose(loaded_config)
         for program, program_config in loaded_config.items():
