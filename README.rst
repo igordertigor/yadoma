@@ -2,7 +2,9 @@ Edit 2023: yadoma was written by @esc a couple of years ago and ended up no
 longer maintained. It seemed that I was the only user, so I'm taking over
 maintenance. However, given the simplicity of the tool, I kept everything
 largely the same, including this README. Hence, "I" refers to @esc rather than
-myself.
+myself. However, I'm changing the build process to tox (instead of the old
+pybuilder), because pybuilder seemed to have problems with environment
+separation that I wasn't able to just quickly fix.
 
 ===================================
 yadoma: yet another dotfile manager
